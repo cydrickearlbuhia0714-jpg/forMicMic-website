@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💘</title>
+
+<style>
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 520px;
+        text-align: center;
+        position: relative;
+    }
+
+    h1, h2 {
+        color: #d6336c;
+    }
+
+    button {
+        padding: 12px 25px;
+        margin: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        background: #ff4d6d;
+        color: white;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Envelope */
+    .envelope {
+        width: 220px;
+        height: 140px;
+        background: #ff6f91;
+        margin: 30px auto;
+        position: relative;
+        border-radius: 0 0 12px 12px;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ff4d6d;
+        clip-path: polygon(0 0, 100% 0, 50% 55%);
+        transform-origin: top;
+        z-index: 3;
+    }
+
+    /* Letter Paper */
+    .paper {
+        position: absolute;
+        bottom: -260px;
+        left: 10px;
+        width: 200px;
+        height: 260px;
+        background: #fffdf7;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        padding: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        overflow-y: auto;
+        z-index: 2;
+    }
+
+    .paper::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .paper::-webkit-scrollbar-thumb {
+        background: #ffb6c1;
+        border-radius: 5px;
+    }
+
+    .message {
+        opacity: 0;
+        transform: translateY(30px);
+        margin-top: 20px;
+    }
+
+    /* Floating hearts */
+    .heart {
+        position: absolute;
+        color: red;
+        animation: floatUp 4s linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-350px); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div id="question">
+        <h1>FOR MICHAELA,<br>ARE YOU MICHAELA?</h1>
+        <button onclick="yesClicked()">Yes</button>
+        <button onclick="alert('Only Michaela is allowed here 💖')">No</button>
+    </div>
+
+    <div id="envelopeSection" class="hidden">
+        <h2>Click to open 💌</h2>
+        <div id="envelope" class="envelope" onclick="openEnvelope()">
+            <div id="flap" class="flap"></div>
+
+            <div id="paper" class="paper">
+                <strong>Dear Michaela,</strong><br><br>
+
+                I don’t even know where to start, because no words ever feel
+                like enough when it comes to you. From the smallest moments
+                to the biggest smiles, you somehow make everything feel
+                warmer and brighter just by being you.<br><br>
+
+                You have this way of turning ordinary days into something
+                special. A laugh, a look, a tiny moment — suddenly it
+                matters, suddenly it stays with me. You remind me that love
+                isn’t always loud; sometimes it’s gentle, steady, and
+                beautifully real.<br><br>
+
+                I admire your kindness, your strength, and the way you care
+                so deeply. You inspire me more than you probably realize,
+                and I feel incredibly lucky to know you. Being able to share
+                time, thoughts, and feelings with you means more than I can
+                ever explain.<br><br>
+
+                This letter is just a small piece of how much you mean to me,
+                but I hope it makes you smile — even a little — the way you
+                always make me smile.<br><br>
+
+                <strong>Happy Valentine’s Day 💘</strong><br><br>
+
+                With all my heart,<br>
+                ❤️
+            </div>
+        </div>
+    </div>
+
+    <div id="finalMessage" class="message hidden">
+        <h2>Will you be my Valentine? 💖</h2>
+    </div>
+</div>
+
+<script>
+function yesClicked() {
+    const q = document.getElementById("question");
+    q.style.transition = "opacity 1s, transform 1s";
+    q.style.opacity = 0;
+    q.style.transform = "scale(0.9)";
+
+    setTimeout(() => {
+        q.classList.add("hidden");
+        document.getElementById("envelopeSection").classList.remove("hidden");
+    }, 1000);
+}
+
+function openEnvelope() {
+    const flap = document.getElementById("flap");
+    const paper = document.getElementById("paper");
+
+    flap.style.transition = "transform 1s";
+    flap.style.transform = "rotateX(180deg)";
+
+    setTimeout(() => {
+        paper.style.transition = "bottom 1.5s";
+        paper.style.bottom = "10px";
+        spawnHearts();
+    }, 600);
+
+    setTimeout(() => {
+        const msg = document.getElementById("finalMessage");
+        msg.classList.remove("hidden");
+        msg.style.transition = "opacity 2s, transform 2s";
+        msg.style.opacity = 1;
+        msg.style.transform = "translateY(0)";
+    }, 2000);
+}
+
+function spawnHearts() {
+    for (let i = 0; i < 18; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.bottom = "0px";
+        heart.style.fontSize = (14 + Math.random() * 22) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }
+}
+</script>
+
+</body>
+</html>
